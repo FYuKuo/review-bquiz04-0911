@@ -59,6 +59,35 @@ include('./api/base.php');
 
             <div style="min-height:400px;">
             <!-- 側邊選單這裡 -->
+            <a href="?type=0">全部商品(<?=$Goods->math('COUNT','id',['sh'=>1])?>)</a>
+                <?php
+                $bigs = $Type->all(['parent'=>0]);
+                foreach ($bigs as $key => $big) {
+                ?>
+            <div class="big_out">
+                
+                <a href="?type=<?=$big['id']?>">
+                    <?=$big['name']?>(<?=$Goods->math('COUNT','id',['sh'=>1,'big'=>$big['id']])?>)
+                 </a>
+            
+                <div class="mid_out d-n">
+
+                <?php
+                $mids = $Type->all(['parent'=>$big['id']]);
+                foreach ($mids as $key => $mid) {
+                ?>
+                <a href="?type=<?=$mid['id']?>"  style="background-color: lightblue;">
+                    <?=$mid['name']?>(<?=$Goods->math('COUNT','id',['sh'=>1,'mid'=>$mid['id']])?>)
+                </a>
+
+                <?php
+                }
+                ?>
+                </div>
+            </div>
+                <?php
+                }
+                ?>
             </div>
             <span>
                 <div>進站總人數</div>
@@ -86,3 +115,9 @@ include('./api/base.php');
 </body>
 
 </html>
+
+<script>
+    $('.big_out').hover(function(){
+        $(this).children('.mid_out').toggle();
+    })
+</script>

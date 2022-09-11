@@ -25,7 +25,7 @@
         <td><?=$ord['name']?></td>
         <td><?=$ord['orddate']?></td>
         <td>
-        <input type="button" value="刪除" onclick="del(<?=$big['id']?>,'type')">
+        <input type="button" value="刪除" onclick="del(<?=$ord['id']?>,'ord')">
         </td>
     </tr>
     <?php
