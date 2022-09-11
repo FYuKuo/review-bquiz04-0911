@@ -28,9 +28,29 @@ include('./api/base.php');
                 <a href="?do=look">購物流程</a> |
                 <a href="?do=buycart">購物車</a> 
                 |
+                <?php
+                if(isset($_SESSION['mem'])){
+                ?>
+                <a href="./api/logout.php?table=mem">登出</a> 
+                <?php
+                }else{
+                ?>
                 <a href="?do=login">會員登入</a> 
+                <?php
+                }
+                ?>
                 |
+                <?php
+                if(isset($_SESSION['mem'])){
+                ?>
+                <a href="./back.php">返回管理</a> 
+                <?php
+                }else{
+                ?>
                 <a href="?do=admin">管理登入</a>
+                <?php
+                }
+                ?>
             </div>
             <marquee>情人節特惠活動 &nbsp; 年終特賣會開跑了</marquee>
             
@@ -49,7 +69,13 @@ include('./api/base.php');
         </div>
 
         <div id="right">
-
+            <?php
+                if(file_exists('./front/'.$do.'.php')){
+                    include('./front/'.$do.'.php');
+                }else{
+                    include('./front/main.php');
+                }
+            ?>
         </div>
 
         <div id="bottom" style="line-height:70px;background:url(icon/bot.png); color:#FFF;" class="ct">
