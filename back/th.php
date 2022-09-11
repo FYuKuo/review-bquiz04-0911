@@ -4,7 +4,16 @@
 </div>
 <div class="ct">
     新增中分類
-    <select name="bigType" id="bigType"></select>
+    <select name="bigType" id="bigType">
+        <?php
+        $bigs = $Type->all(['parent'=>0]);
+        foreach ($bigs as $key => $big) {
+        ?>
+        <option value="<?=$big['id']?>"><?=$big['name']?></option>
+        <?php
+        }
+        ?>
+    </select>
     <input type="text" name="mid" id="mid"><input type="button" value="新增" onclick="add_type('mid')">
 </div>
 <table class="w-100  ct">
@@ -16,7 +25,7 @@ foreach ($bigs as $key => $big) {
 <tr class="tt">
     <td class="w-60" style="text-align: left;"><?=$big['name']?></td>
     <td>
-        <input type="button" value="修改" onclick="edit_type(<?=$big['id']?>)">
+        <input type="button" value="修改" onclick="edit_type(<?=$big['id']?>,'<?=$big['name']?>')">
         <input type="button" value="刪除" onclick="del(<?=$big['id']?>,'type')">
     </td>
 </tr>
@@ -27,7 +36,7 @@ foreach ($mids as $key => $mid) {
 <tr class="pp">
     <td class="w-60"><?=$mid['name']?></td>
     <td>
-        <input type="button" value="修改" onclick="edit_type(<?=$mid['id']?>)">
+        <input type="button" value="修改" onclick="edit_type(<?=$mid['id']?>,'<?=$mid['name']?>')">
         <input type="button" value="刪除" onclick="del(<?=$mid['id']?>,'type')">
     </td>
 </tr>
@@ -77,3 +86,44 @@ foreach ($goods as $key => $good) {
 }
 ?>
 </table>
+
+
+<script>
+
+    function edit_type(id,name){
+
+        name = prompt('請輸入您要修改的分類名稱',name);
+
+        if(name != null){
+            $.post('./api/type.php',{id,name},()=>{
+            lo();
+            })
+
+            // console.log(name);
+            // console.log(id);
+        }
+    }
+    
+
+    function add_type(type){
+        let name = '';
+        let parent = 0;
+        
+        switch (type) {
+            case 'big':
+                name = $('#big').val();
+                parent = 0;
+            break;
+                
+            case 'mid':
+                name = $('#mid').val();
+                parent = $('#bigType').val();
+            break;
+        
+        }
+
+        $.post('./api/type.php',{name,parent},()=>{
+            lo();
+        })
+    }
+</script>
