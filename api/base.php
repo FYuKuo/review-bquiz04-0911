@@ -58,7 +58,7 @@ class DB
 
     public function del($id)
     {
-        $sql = "SELECT * FROM `$this->table` ";
+        $sql = "DELETE FROM `$this->table` ";
             if(is_array($id)){
                 foreach ($id as $key => $value) {
                     $tmp[] = " `$key` = '$value' ";
@@ -68,27 +68,28 @@ class DB
             }else{
             $sql .= " WHERE `id` = '$id' ";    
             }
-
+            // echo $sql;
         return $this->pdo->exec($sql);
     }
 
 
     public function save($array)
     {
-        if(isset($array['key'])){
+        if(isset($array['id'])){
             foreach ($array as $key => $value) {
                 if($key != 'id'){
                     $tmp[] = " `$key` = '$value' ";
                 }
             }
 
-            $sql = "UPDATE `$this->table` SET " . join(",",$tmp) . " WHERE `id` = '{$array['key']}'";
+            $sql = "UPDATE `$this->table` SET " . join(",",$tmp) . " WHERE `id` = '{$array['id']}'";
         }else{
             $col = join("`,`",array_keys($array));
             $val = join("','",$array);
 
             $sql = "INSERT INTO `$this->table` (`$col`) VALUES ('$val')";
         }
+        // echo $sql;
         return $this->pdo->exec($sql);
     }
 

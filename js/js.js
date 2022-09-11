@@ -18,6 +18,7 @@ function del(id,table)
 {
 	$.post('./api/del.php',{id,table},()=>{
 		lo();
+		// console.log(res);
 	})
 }
 
