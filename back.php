@@ -14,6 +14,11 @@ include('./api/base.php');
     <link href="./css/css.css" rel="stylesheet" type="text/css">
     <script src="./js/js.js"></script>
     <script src="./js//jquery-3.4.1.min.js"></script>
+    <style>
+        #left,#right{
+            height: 535px;
+        }
+    </style>
 </head>
 
 <body>

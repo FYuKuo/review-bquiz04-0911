@@ -189,8 +189,8 @@ div.ww:hover > div.s
 
 .myTable {
 	width: 80%;
-	margin-bottom: auto;
-	margin-top: auto;
+	margin-right: auto;
+	margin-left: auto;
 }
 
 .aut {

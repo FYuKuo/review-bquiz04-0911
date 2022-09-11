@@ -41,7 +41,7 @@ include('./api/base.php');
                 ?>
                 |
                 <?php
-                if(isset($_SESSION['mem'])){
+                if(isset($_SESSION['admin'])){
                 ?>
                 <a href="./back.php">返回管理</a> 
                 <?php
