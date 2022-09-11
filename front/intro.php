@@ -16,7 +16,7 @@ $good=$Goods->find($_GET['id']);
             價錢：<?=$good['price']?>
         </div>
         <div class="pp m-2 p-10">
-            規格：<?=$good['spec']?>
+            詳細說明：<?=$good['intro']?>
         </div>
         <div class="pp m-2 p-10">
             庫存：<?=$good['qt']?>

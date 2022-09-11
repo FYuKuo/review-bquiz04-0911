@@ -1,6 +1,11 @@
-<h1 class="ct">新增商品</h1>
+<?php
+$good = $Goods->find($_GET['id']);
 
-<form action="./api/add_goods.php" method="post" enctype="multipart/form-data">
+?>
+
+<h1 class="ct">修改商品</h1>
+
+<form action="./api/edit_goods.php" method="post" enctype="multipart/form-data">
 <table class="myTable">
     <tr>
         <th class="tt w-30">所屬大分類</th>
@@ -10,7 +15,7 @@
             $bigs = $Type->all(['parent'=>0]);
             foreach ($bigs as $key => $big) {
             ?>
-            <option value="<?=$big['id']?>"><?=$big['name']?></option>
+            <option value="<?=$big['id']?>" <?=($big['id'] == $good['big'])?'selected':''?>><?=$big['name']?></option>
             <?php
             }
             ?>
@@ -20,37 +25,47 @@
     <tr>
         <th class="tt w-30">所屬中分類</th>
         <td class="pp">
-            <select name="mid" id="mid"></select>
+            <select name="mid" id="mid">
+            <?php
+            $mids = $Type->all(['parent'=>$good['big']]);
+            foreach ($mids as $key => $mid) {
+            ?>
+            <option value="<?=$mid['id']?>" <?=($mid['id'] == $good['mid'])?'selected':''?>><?=$mid['name']?></option>
+            <?php
+            }
+            ?>
+            </select>
         </td>
     </tr>
     <tr>
         <th class="tt w-30">商品編號</th>
-        <td class="pp">
-            完成分類後自動分配
+        <td class="pp myNo">
+            <?=$good['no']?>
+            <input type="hidden" name="no" value="<?=$good['no']?>">
         </td>
     </tr>
     <tr>
         <th class="tt w-30">商品名稱</th>
         <td class="pp">
-            <input type="text" name="name" id="name">
+            <input type="text" name="name" id="name" value="<?=$good['name']?>">
         </td>
     </tr>
     <tr>
         <th class="tt w-30">商品價錢</th>
         <td class="pp">
-            <input type="text" name="price" id="price">
+            <input type="text" name="price" id="price" value="<?=$good['price']?>">
         </td>
     </tr>
     <tr>
         <th class="tt w-30">規格</th>
         <td class="pp">
-            <input type="text" name="spec" id="spec">
+            <input type="text" name="spec" id="spec" value="<?=$good['spec']?>">
         </td>
     </tr>
     <tr>
         <th class="tt w-30">庫存量</th>
         <td class="pp">
-            <input type="text" name="qt" id="qt">
+            <input type="text" name="qt" id="qt" value="<?=$good['qt']?>">
         </td>
     </tr>
     <tr>
@@ -62,12 +77,13 @@
     <tr>
         <th class="tt w-30">商品介紹</th>
         <td class="pp">
-            <textarea name="intro" id="intro" cols="30" rows="10"></textarea>
+            <textarea name="intro" id="intro" cols="30" rows="10"><?=$good['intro']?></textarea>
         </td>
     </tr>
 </table>
 <div class="ct">
-    <input type="submit" value="新增">
+    <input type="hidden" name="id" value="<?=$good['id']?>">
+    <input type="submit" value="修改">
     <input type="reset" value="重置">
     <input type="button" value="取消" onclick="to('?do=th')">
 </div>
@@ -75,7 +91,6 @@
 </form>
 
 <script>
-    get_mid()
 
     function get_mid(){
         let big = $('#big').val();
@@ -92,5 +107,17 @@
 
 
 
+    $('#big,#mid').on('change',function(){
+        let big = $('#big').val();
+        let mid = $('#mid').val();
+
+        $.get('./api/get_no.php',{big,mid},(res)=>{
+            // console.log(res);
+            $('.myNo').html(res);
+        })
+    })
+
+
+    
 </script>
 

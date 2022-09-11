@@ -1,5 +1,5 @@
 <?php
-$id = ($_GET['id'])??0;
+$id = ($_GET['type'])??0;
 if($id == 0){
     $goods = $Goods->all(['sh'=>1]);
     $text = "全部商品";
