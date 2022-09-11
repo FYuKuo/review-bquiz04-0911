@@ -225,3 +225,7 @@ div.ww:hover > div.s
 	margin-right: 5px;
 	margin-left: 5px;
 }
+
+.red {
+	color: red;
+}
